@@ -13,19 +13,16 @@ st.set_page_config(
 with st.sidebar:
     st.header("About")
     st.write(
-        "This prototype demonstrates a machine learning pipeline for "
-        "short-term financial market direction prediction."
+        "This is my prototype. It demonstrates a machine learning pipeline for short-term financial market direction prediction."
     )
 
     st.write(
-        "The app uses live Yahoo Finance data, engineered technical "
-        "indicators, and a trained XGBoost model to generate a directional "
-        "prediction."
+        "The app uses live Yahoo Finance data, engineered technical and market indicators, and a trained XGBoost model to generate a directional prediction."
     )
 
     st.warning(
-        "For educational and research purposes only. "
-        "Not financial advice."
+     
+        "Definitely do not use for financial advice."
     )
 
 # load saved model files created by the training script
