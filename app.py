@@ -10,7 +10,23 @@ st.set_page_config(
     page_title="Financial Market Prediction Dashboard",
     layout="wide"
 )
+with st.sidebar:
+    st.header("About")
+    st.write(
+        "This prototype demonstrates a machine learning pipeline for "
+        "short-term financial market direction prediction."
+    )
 
+    st.write(
+        "The app uses live Yahoo Finance data, engineered technical "
+        "indicators, and a trained XGBoost model to generate a directional "
+        "prediction."
+    )
+
+    st.warning(
+        "For educational and research purposes only. "
+        "Not financial advice."
+    )
 
 # load saved model files created by the training script
 
