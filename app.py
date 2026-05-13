@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 import joblib
 import numpy as np
-
+#arons amazing code :)
 
 st.set_page_config(
     page_title="Financial Market Prediction Dashboard",
@@ -335,7 +335,7 @@ col3.metric(
 # short summary of saved prediction behaviour
 st.write(
     "The prediction outputs show how frequently the model predicted "
-    "upward or downward market movement. While the model identified "
-    "some useful patterns, the results further demonstrate the difficulty "
-    "of short-term financial market prediction."
+    "upward or downward market movement. These results demonstrate how difficult it is to confidently predict markets short term."
+    " The model's predictions were often close to the decision boundary, "
+    "which is consistent with the weak predictive strength observed during evaluation. "
 )
