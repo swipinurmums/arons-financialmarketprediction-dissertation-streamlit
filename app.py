@@ -26,14 +26,14 @@ with st.sidebar:
     )
 
 # load saved model files created by the training script
-
+#sourced these from the training script, copied the code into a file here and ran it :)
 xgb_model = joblib.load("xgboost_model.pkl")
 scaler = joblib.load("xgboost_scaler.pkl")
 features = joblib.load("xgboost_features.pkl")
 
 
 # load saved results used for the summary dashboard
-
+#sourced these from the colab too, copied the code into a file here and ran it :)
 model_results = pd.read_csv("final_model_comparison.csv")
 feature_importance = pd.read_csv("xgboost_feature_importance.csv")
 predictions = pd.read_csv("xgboost_predictions.csv")
@@ -47,28 +47,25 @@ def create_features(data):
     # calculate daily returns
     data["Returns"] = data["Close"].pct_change()
 
-    # moving averages used to represent short and medium term trend
+    # moving averages 
     data["MA5"] = data["Close"].rolling(5).mean()
     data["MA20"] = data["Close"].rolling(20).mean()
 
-    # rolling volatility based on recent daily returns
+    # rolling volatility
     data["Volatility"] = data["Returns"].rolling(5).std()
 
-    # lagged returns give the model recent market movement context
     data["Lag1"] = data["Returns"].shift(1)
     data["Lag2"] = data["Returns"].shift(2)
 
-    # simple momentum over the previous five trading days
     data["Momentum"] = (
         data["Close"] - data["Close"].shift(5)
     )
 
-    # longer volatility window to capture wider market instability
+    # longer volatility over 20 days
     data["Volatility20"] = (
         data["Returns"].rolling(20).std()
     )
 
-    # calculate rsi from average gains and losses
     delta = data["Close"].diff()
 
     gain = delta.clip(lower=0)
@@ -81,7 +78,7 @@ def create_features(data):
 
     data["RSI"] = 100 - (100 / (1 + rs))
 
-    # calculate macd using short and longer exponential moving averages
+    # calculate macd w 12 and 26 day exponential moving averages
     ema12 = data["Close"].ewm(
         span=12,
         adjust=False
@@ -94,16 +91,13 @@ def create_features(data):
 
     data["MACD"] = ema12 - ema26
 
-    # remove rows created by rolling calculations that contain missing values
     return data.dropna()
 
 
 def make_prediction(data):
 
-    # take the latest available row of engineered features
     latest_features = data[features].iloc[-1:]
 
-    # apply the same scaler used during model training
     latest_scaled = scaler.transform(
         latest_features
     )
@@ -150,7 +144,7 @@ def show_confidence_message(probability_up):
 
 st.title("Financial Market Prediction Prototype")
 
-# keep this visible because model outputs could be mistaken for advice
+# keep this visible because model outputs could be mistaken for advice. it definitely wont and totally shouldnt lol but still 
 st.warning(
     "This application is for educational and research purposes only "
     "and should not be interpreted as financial advice."
@@ -179,7 +173,7 @@ if ticker:
         progress=False
     )
 
-    # handle invalid or unsupported ticker symbols
+    # invaldi tickers error msg
     if stock_data.empty:
 
         st.error(
@@ -189,7 +183,6 @@ if ticker:
 
     else:
 
-        # create the same features used during model training
         stock_data = create_features(
             stock_data
         )
@@ -256,6 +249,8 @@ if ticker:
 
 
 # model performance summary
+#this was so much work to get right, i had a great time doing it tho
+
 
 st.header("Model Performance Summary")
 

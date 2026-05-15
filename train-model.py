@@ -67,7 +67,6 @@ y_train = y[:split]
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 
-# Train same simple XGBoost model used for RSI/MACD evaluation
 xgb_model = XGBClassifier(
     n_estimators=100,
     max_depth=4,
